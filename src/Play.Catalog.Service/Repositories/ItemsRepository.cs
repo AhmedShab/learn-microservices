@@ -19,7 +19,7 @@ namespace Play.Catalog.Service.Repositories
       dbCollection = database.GetCollection<Item>(collectionName);
     }
 
-    public async Task<IReadOnlyCollection<Item>> GetTaskAsync()
+    public async Task<IReadOnlyCollection<Item>> GetAllAsync()
     {
       return await dbCollection.Find(filterBuilder.Empty).ToListAsync();
     }
