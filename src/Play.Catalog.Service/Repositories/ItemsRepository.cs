@@ -6,9 +6,10 @@ using System;
 
 namespace Play.Catalog.Service.Repositories
 {
-  public class ItemsRepository 
+
+  public class ItemsRepository : IItemsRepository
   {
-    private const string collectionName = "items" ;
+    private const string collectionName = "items";
     private readonly IMongoCollection<Item> dbCollection;
     private readonly FilterDefinitionBuilder<Item> filterBuilder = Builders<Item>.Filter;
 
@@ -51,7 +52,8 @@ namespace Play.Catalog.Service.Repositories
       await dbCollection.ReplaceOneAsync(filter, entity);
     }
 
-    public async Task RemoveAsync(Guid id) {
+    public async Task RemoveAsync(Guid id)
+    {
       {
         FilterDefinition<Item> filter = filterBuilder.Eq(entity => entity.Id, id);
         await dbCollection.DeleteOneAsync(filter);
