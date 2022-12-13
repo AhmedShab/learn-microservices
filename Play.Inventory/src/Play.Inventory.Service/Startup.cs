@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Play.Common.MassTransit;
 using Play.Common.MongoDB;
 using Play.Inventory.Service.Clients;
 using Play.Inventory.Service.Entities;
@@ -63,7 +64,9 @@ namespace Play.Inventory.Service
       Random jitterer = new Random();
 
       services.AddMongo()
-          .AddMongoRepository<InventoryItem>("inventoryItems");
+          .AddMongoRepository<InventoryItem>("inventoryItems")
+          .AddMongoRepository<CatalogItem>("catalogItems")
+          .AddMassTransitWithRabbitMq();
 
       services.AddHttpClient<CatalogClient>(client =>
       {
