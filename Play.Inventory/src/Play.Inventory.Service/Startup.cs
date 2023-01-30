@@ -18,6 +18,9 @@ namespace Play.Inventory.Service
 {
   public class Startup
   {
+
+    private const string AllowedOriginSetting = "AllowedOrigin";
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
@@ -57,6 +60,13 @@ namespace Play.Inventory.Service
       {
         endpoints.MapControllers();
       });
+
+      app.UseCors(builder => 
+                {
+                    builder.WithOrigins(Configuration[AllowedOriginSetting])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
     }
 
     private static void AddCatalogClient(IServiceCollection services)
