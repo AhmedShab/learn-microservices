@@ -35,6 +35,21 @@ namespace Play.Catalog.Service {
                 .AddMassTransitWithRabbitMq()
                 .AddJwtBearerAuthentication();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.Read, policy =>
+                {
+                    policy.RequireRole("Admin");
+                    policy.RequireClaim("scope", "catalog.readaccess", "catalog.fullAccess");
+                });
+
+                options.AddPolicy(Policies.Write, policy =>
+                {
+                    policy.RequireRole("Admin");
+                    policy.RequireClaim("scope", "catalog.writeaccess", "catalog.fullAccess");
+                });                
+            });
+
             services.AddControllers(options => 
             {
                 options.SuppressAsyncSuffixInActionNames = false;
