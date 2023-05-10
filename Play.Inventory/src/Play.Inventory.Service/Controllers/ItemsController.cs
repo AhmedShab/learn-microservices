@@ -66,13 +66,13 @@ namespace Play.Inventory.Service.Controllers {
         inventoryItem = new InventoryItem {
           CatalogItemId = grandItemsDto.CatalogItemId,
           UserId = grandItemsDto.UserId,
-          Quantity = grandItemsDto.Quality,
+          Quantity = grandItemsDto.Quantity,
           AcquiredDate = DateTimeOffset.UtcNow
         };
 
         await inventoryItemsRepository.CreateAsync(inventoryItem);
       } else {
-        inventoryItem.Quantity += grandItemsDto.Quality;
+        inventoryItem.Quantity += grandItemsDto.Quantity;
         await inventoryItemsRepository.UpdateAsync(inventoryItem);
       }
 
