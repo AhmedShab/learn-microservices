@@ -66,7 +66,12 @@ namespace Play.Catalog.Service.Controller
 
       await itemsRepository.CreateAsync(item);
 
-      await publishEndpoint.Publish(new CatalogItemCreated(item.Id, item.Name, item.Description));
+      await publishEndpoint.Publish(new CatalogItemCreated(
+        item.Id,
+        item.Name,
+        item.Description,
+        item.Price)
+      );
 
       return CreatedAtAction(nameof(GetByIdAsync), new { id = item.Id }, item);
     }
@@ -88,7 +93,12 @@ namespace Play.Catalog.Service.Controller
 
       await itemsRepository.UpdateAsync(existingItem);
 
-      await publishEndpoint.Publish(new CatalogItemUpdated(existingItem.Id, existingItem.Name, existingItem.Description));
+      await publishEndpoint.Publish(new CatalogItemUpdated(
+        existingItem.Id,
+        existingItem.Name,
+        existingItem.Description,
+        existingItem.Price)
+      );
 
       return NoContent();
     }
