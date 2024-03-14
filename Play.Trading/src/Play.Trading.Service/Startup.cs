@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Play.Common.Identity;
+using Play.Common.MongoDB;
 
 namespace Play.Trading.Service
 {
@@ -26,6 +28,8 @@ namespace Play.Trading.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMongo()
+                .AddJwtBearerAuthentication();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,6 +52,7 @@ namespace Play.Trading.Service
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
